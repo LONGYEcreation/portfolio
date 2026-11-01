@@ -1,0 +1,2 @@
+// Measured reference viewport: 500 x 794 CSS px. Native viewport scaling only.
+(()=>{const meta=document.querySelector('meta[name="viewport"]');if(!meta)return;const original=meta.content;let last='';function fit(){const v=window.visualViewport,w=Math.round(v?v.width*v.scale:window.innerWidth);if(!w)return;const next=w<500?'width=500,initial-scale='+(w/500):original;if(next!==last){last=next;meta.content=next}}fit();addEventListener('orientationchange',()=>setTimeout(fit,150));})();
