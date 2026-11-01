@@ -1,0 +1,4 @@
+@media(max-width:700px){html{-webkit-text-size-adjust:100%;text-size-adjust:100%}}@font-face{font-family:PublishedCaseIndex;src:url('assets/NotoSerifSC-VF.ttf');font-weight:100 900;font-display:swap;unicode-range:U+0000-024F}@media(max-width:430px){#caseEyebrow,#case03Eyebrow{font-family:PublishedCaseIndex,serif!important;font-variant-numeric:lining-nums;font-variant-caps:normal}}
+@media(max-width:430px){html body #caseBody[data-shared-mobile-body][contenteditable],html body #case03Body[data-shared-mobile-body][contenteditable]{top:var(--release-phone-body-top,var(--shared-body-top))!important}}
+
+.work-edit-toggle,.work-editor,.prompt-spacing-editor{display:none!important}
