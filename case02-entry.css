@@ -1,0 +1,21 @@
+/* CASE02 uses the same ready-gated cover entrance as CASE03. */
+body.case02-page>main{animation:none}
+@keyframes case02-cover-arrive{from{opacity:0;translate:0 7px}to{opacity:1;translate:0 0}}
+html.soft-nav-ready body.case02-page>main{animation:case02-cover-arrive .65s ease both}
+html.soft-nav-loading body.case02-page>#caseBody,html.soft-nav-loading body.case02-page>.case01-shortcuts,html.soft-nav-loading body.case02-page>#textToggle{opacity:0!important;visibility:hidden}
+html.soft-nav-ready body.case02-page>#caseBody,html.soft-nav-ready body.case02-page>.case01-shortcuts,html.soft-nav-ready body.case02-page>#textToggle{transition:opacity .65s ease,visibility .65s ease}
+body.case02-page.soft-nav-leaving>#caseBody,body.case02-page.soft-nav-leaving>.case01-shortcuts,body.case02-page.soft-nav-leaving>#textToggle{opacity:0;transition:opacity .25s ease;pointer-events:none}
+@media(prefers-reduced-motion:reduce){html.soft-nav-ready body.case02-page>main{animation:none}html.soft-nav-ready body.case02-page>#caseBody{transition:none}}
+@media(min-width:701px){html:has(body.case02-page){scroll-snap-type:none!important}}
+
+/* Mobile follows CASE01/03: native document scrolling and one continuous background. */
+.case02-mobile-background{display:none}
+@media(max-width:700px){
+html:has(body.case02-page){scroll-snap-type:none!important;scroll-behavior:auto!important;overflow-anchor:none}
+body.case02-page{isolation:isolate}
+body.case02-page:before,body.case02-page:after{content:none!important}
+body.case02-page .case-screen-stop{display:none}
+body.case02-page #case02Comparison:before,body.case02-page #case02Prototypes:before{content:none}
+.case02-mobile-background{display:block;position:absolute;left:0;top:0;width:100%;z-index:-2;pointer-events:none;overflow:hidden}
+.case02-mobile-background-tile{position:absolute;left:0;width:100%;background-position:center top;background-size:100% auto;background-repeat:no-repeat}
+}

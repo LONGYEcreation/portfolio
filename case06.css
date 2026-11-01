@@ -1,0 +1,68 @@
+
+.case06-document{height:100svh;min-height:500px;padding:55px 4.2361%;display:flex;flex-direction:column;align-items:center;scroll-margin-top:0}
+.document-heading{width:100%;text-align:center;flex:none;margin-bottom:35px;padding-bottom:20px;border-bottom:1px solid #ffffff70}
+.document-heading h2{font-size:clamp(28px,2.5vw,42px);font-weight:400;line-height:1.4;margin:0}
+.document-heading p{font-size:clamp(19px,1.8vw,30px);font-weight:400;line-height:1.5;margin:4px 0 0}
+.document-stage{position:relative;width:100%;min-height:0;flex:none;display:flex;justify-content:center;align-items:center;padding:0 5%}
+.document-image{height:100%;max-width:100%;padding:0;border:0;background:none;cursor:zoom-in;display:flex;align-items:center;justify-content:center}
+.document-image img{display:block;width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+.document-arrow{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;padding:3px;border:0;background:none;color:white;cursor:pointer}
+.document-arrow.previous{left:0}.document-arrow.next{right:0}.document-arrow svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.2;animation:case-navigation-breathe 2.8s ease-in-out infinite}.document-arrow.previous svg{rotate:180deg}.document-arrow:hover svg{animation:none;opacity:1}
+.document-caption{margin:20px 0 0;display:flex;gap:18px;justify-content:center;font-size:11px;line-height:1.6;flex:none;color:#ffffffb3}.document-page-number{font-family:'Case Navigation Latin',serif;font-variant-numeric:oldstyle-nums proportional-nums}
+.document-heading [data-nit-copy]{outline:none;white-space:pre-wrap}
+@media(max-width:700px){.case06-document{height:auto;min-height:100svh;padding:35px 6%}.document-heading{margin-bottom:25px;padding-bottom:16px}.document-heading h2{font-size:25px}.document-heading p{font-size:17px}.document-stage{padding:0 7%;height:auto;min-height:0}.document-image{height:auto;width:100%}.document-image img{width:100%;height:auto;max-height:none}.document-arrow{width:24px;height:24px;padding:0}.document-caption{font-size:10px;margin-top:18px;gap:12px}}
+@media(prefers-reduced-motion:reduce){.document-arrow svg{animation:none}}
+
+/* One linked flow inside one full-width entry frame. */
+.case06-single-entry{grid-template-columns:1fr;grid-template-rows:auto}
+.case06-single-entry>a.case06-flow-target{grid-column:1;grid-row:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:116px;padding:24px;border-left:0}
+.case06-single-entry .case06-flow-line{display:flex;align-items:baseline;justify-content:center;gap:22px;margin:0}
+.case06-single-entry small.case06-flow-line{margin-top:10px}
+.case06-single-entry .case06-flow-line>span{display:inline;font-size:inherit;line-height:inherit;font-weight:inherit;margin:0;transform:none}
+.case06-single-entry .case06-flow-arrow{flex:none}
+@media(max-width:700px){.case06-single-entry>a.case06-flow-target{min-height:110px;padding:20px 10px}.case06-single-entry .case06-flow-line{gap:12px}.case06-single-entry strong.case06-flow-line{font-size:18px}.case06-single-entry small.case06-flow-line{font-size:9px;gap:9px}}
+/* Restore stacked bilingual blocks; center the combined flow inside one frame. */
+.case06-single-entry>a.case06-flow-target{flex-direction:row;gap:36px}
+.case06-flow-block{display:flex;flex-direction:column;align-items:center;text-align:center}
+.case06-flow-block>strong{margin:0;font-size:22px;font-weight:400;line-height:1.4}
+.case06-flow-block>small{margin:10px 0 0;font-size:12px;line-height:1.6}
+.case06-flow-target>.case06-flow-arrow{margin:0;font-size:24px;line-height:1;align-self:center}
+@media(max-width:700px){.case06-single-entry>a.case06-flow-target{gap:14px}.case06-flow-block{min-width:0}.case06-flow-block>strong{font-size:18px}.case06-flow-block>small{font-size:9px;margin-top:8px}.case06-flow-target>.case06-flow-arrow{font-size:20px}}
+/* Preserve the original quarter-width content centers and a single centered number. */
+.case06-single-entry>a.case06-flow-target{position:relative;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:0;min-height:0;padding:22px;border:0}
+.case06-flow-target>.case06-flow-number{grid-column:1/-1;grid-row:1;justify-self:center;font-size:11px;line-height:normal;margin:0 0 10px;transform:none}
+.case06-flow-target>.case06-flow-block{grid-row:2;min-width:0}
+.case06-flow-target>.case06-flow-block:nth-child(2){grid-column:1}
+.case06-flow-target>.case06-flow-block:last-child{grid-column:2}
+.case06-flow-target>.case06-flow-arrow{position:absolute;left:50%;top:calc(50% + 5px);transform:translate(-50%,-50%);margin:0;align-self:auto}
+@media(max-width:700px){.case06-single-entry>a.case06-flow-target{padding:22px 10px;gap:0;min-height:0}.case06-flow-target>.case06-flow-number{font-size:11px}.case06-flow-block>strong{font-size:18px}.case06-flow-block>small{font-size:9px}}
+/* Match CASE05 entry typography and original half-column centers exactly. */
+@media(min-width:701px){
+ .case06-single-entry>a.case06-flow-target{padding:22px 0}
+ .case06-flow-target>.case06-flow-block{padding:0 22px}
+ .case06-flow-block>strong{line-height:normal}
+ .case06-flow-block>small{line-height:normal;margin-top:10px}
+}
+/* Remove the numbering row and keep equal padding above and below the text blocks. */
+.case06-single-entry>a.case06-flow-target{grid-template-rows:auto;padding:22px 0;align-items:center}
+.case06-flow-target>.case06-flow-block{grid-row:1}
+.case06-flow-target>.case06-flow-arrow{top:50%}
+@media(max-width:700px){.case06-single-entry>a.case06-flow-target{padding:22px 10px}}
+/* Standard arrow: the established thin-line curved-head design. */
+.case06-flow-target>.case06-flow-arrow{width:24px;height:24px}
+.case06-flow-arrow>svg{display:block;width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.2;stroke-linecap:butt;stroke-linejoin:round}
+@media(max-width:700px){.case06-flow-target>.case06-flow-arrow{width:20px;height:20px}}
+/* Match the CASE03 product-exploration heading exactly, without a divider. */
+.case06-document{padding-top:6.6667svh}
+.document-heading{border:0;padding:0;margin:0 0 36px}
+.document-heading h2,.document-heading p{display:block;font-family:"Unified Latin","Unified CJK",serif;font-size:clamp(22px,min(2.2222vw,3.5556svh),48px);font-weight:400;line-height:1.4;letter-spacing:normal;margin:0}
+@media(max-width:700px){.case06-document{padding-top:6.6667svh}.document-heading{padding:0;margin-bottom:36px}.document-heading h2,.document-heading p{font-size:clamp(15px,3.2vw,22px);line-height:1.4;margin:0}}
+/* CASE03 uses independent saved CN/EN typography and one shared heading position. */
+.case06-document{padding-top:calc(6.6667svh + var(--case06-heading-offset,0px))}
+@media(max-width:700px){.case06-document{padding-top:calc(6.6667svh + var(--case06-heading-offset,0px))}}
+/* Equal outer gaps; keep the image anchored to its existing upper edge. */
+.case06-document{padding-bottom:calc(6.6667svh + var(--case06-heading-offset,0px))}
+.document-stage,.document-image{align-items:flex-start}
+@media(max-width:700px){.case06-document{padding-bottom:calc(6.6667svh + var(--case06-heading-offset,0px))}}
+/* Display document page movement inside its existing frame. */
+#workflow .document-image{position:relative;overflow:hidden}

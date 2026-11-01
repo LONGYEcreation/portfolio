@@ -1,0 +1,21 @@
+// Scoped to CASE01–03: one vertical touch gesture per page transition.
+(()=>{
+ const name=location.pathname.split('/').pop();if(!['case-chatcut.html','case-nitunxiang.html','case03-nitunxiang.html'].includes(name))return;
+ const media=matchMedia('(max-width:700px)');let touch=null,busy=false,suppressClickUntil=0;
+ function screens(){if(name==='case-chatcut.html')return [document.body,document.querySelector('.case-research')];if(name==='case-nitunxiang.html')return [document.body,document.querySelector('#case02Comparison'),document.querySelector('#case02Evaluation')];return ['#case03Cover','#case03Website','#case03Reasoning'].map(id=>document.querySelector(id))}
+ const top=node=>node===document.body?0:node.getBoundingClientRect().top+scrollY;
+ function action(direction){const pages=screens().filter(Boolean),y=scrollY;if(name==='case-nitunxiang.html'){let visible=0;for(let i=1;i<pages.length;i++)if(top(pages[i])<=y+innerHeight*.35)visible=i;if(direction<0)return visible>0?()=>move(top(pages[visible-1])):null;if(visible>0){const next=pages[visible+1];return next?()=>move(top(next)):null}}let index=0;for(let i=1;i<pages.length;i++)if(y>=top(pages[i])-8)index=i;
+ const current=pages[index],start=top(current),end=index+1<pages.length?top(pages[index+1]):Math.max(start+innerHeight,document.documentElement.scrollHeight);
+ if(direction>0&&y+innerHeight<end-12)return null;if(direction<0&&y>start+12)return null;
+ const research=name==='case-chatcut.html'&&index===1?current:null;
+ if(research&&!research.classList.contains('research-detail-open')&&!research.classList.contains('chatcut-search-open')){if(direction>0&&research.classList.contains('research-summary-open'))return ()=>research.querySelector('.research-intro-next')?.click();if(direction<0&&!research.classList.contains('research-summary-open'))return ()=>research.querySelector('.research-intro-back')?.click()}
+ const target=pages[index+direction];return target?()=>move(top(target)):null;
+ }
+ function move(target){const root=document.documentElement,old=root.style.scrollBehavior,oldSnap=root.style.scrollSnapType,start=scrollY,time=performance.now(),duration=matchMedia('(prefers-reduced-motion:reduce)').matches?0:1050;root.style.scrollBehavior='auto';root.style.scrollSnapType='none';function tick(now){const p=duration?Math.min(1,(now-time)/duration):1;scrollTo(0,start+(target-start)*p*p*(3-2*p));if(p<1)requestAnimationFrame(tick);else{scrollTo(0,target);root.style.scrollBehavior=old;root.style.scrollSnapType=oldSnap}}requestAnimationFrame(tick)}
+ addEventListener('touchstart',event=>{touch=null;if(!media.matches||busy||event.touches.length!==1||document.querySelector('dialog[open],.text-editor:not([hidden]),.research-editor:not([hidden]),.shared-body-panel:not([hidden]),.comparison-type-panel:not([hidden]),.evaluation-edit-panel:not([hidden])'))return;
+ const target=event.target;const imageLink=name==='case-nitunxiang.html'&&target.closest('a')?.querySelector('img');if(target.closest('input,textarea,select,.text-editor,.research-editor,.comparison-type-panel,.evaluation-edit-panel')||target.closest('a')&&!imageLink)return;const button=target.closest('button');if(button&&!button.querySelector('img'))return;if(target.closest('[contenteditable="true"],[contenteditable="plaintext-only"]')===document.activeElement)return;
+ touch={x:event.touches[0].clientX,y:event.touches[0].clientY};},{passive:true});
+ addEventListener('touchmove',event=>{if(!media.matches||event.touches.length!==1)return;if(busy){event.preventDefault();return}if(!touch)return;const dx=event.touches[0].clientX-touch.x,dy=event.touches[0].clientY-touch.y;if(Math.abs(dx)<12&&Math.abs(dy)<12)return;if(Math.abs(dx)>=Math.abs(dy)){touch=null;return}const run=action(dy<0?1:-1);touch=null;if(!run)return;event.preventDefault();if(name==='case-nitunxiang.html')suppressClickUntil=performance.now()+1600;busy=true;run();setTimeout(()=>busy=false,1400);},{passive:false});
+ addEventListener('click',event=>{if(name==='case-nitunxiang.html'&&performance.now()<suppressClickUntil){event.preventDefault();event.stopImmediatePropagation()}},true);
+ addEventListener('touchend',()=>touch=null,{passive:true});addEventListener('touchcancel',()=>touch=null,{passive:true});
+})();

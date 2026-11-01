@@ -1,0 +1,5 @@
+.text-toggle,.text-editor,.shared-body-toggle,.shared-body-panel,.comparison-type-toggle,.comparison-type-panel,.evaluation-edit-toggle,.evaluation-edit-panel,.case02-prototype-toggle,.copy-tools{display:none!important}
+[contenteditable]{outline:none!important;box-shadow:none!important;cursor:inherit!important}
+
+/* Finger paging owns the mobile page stops; legacy viewport snap markers must not intercept it. */
+@media(max-width:700px){html{scroll-snap-type:none!important;scroll-behavior:auto!important}.case-screen-stop{display:none!important}}

@@ -1,0 +1,96 @@
+.case02-comparison{position:absolute;left:0;width:100%;height:100svh;min-height:600px;color:#fff;isolation:isolate;box-sizing:border-box;padding:6.6667svh 4.2361% 75px}.case02-comparison:before{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(#000000bf,#000000bf),url('assets/product-entry.png') center/cover no-repeat}.case02-comparison h2{text-align:center;font-size:clamp(22px,min(2.2222vw,3.5556svh),48px);font-weight:400;line-height:1.4;margin:0 0 36px}.case02-comparison h2 span{display:block}.comparison-layout{display:grid;grid-template-columns:1fr 1fr;gap:8%;position:relative;height:calc(100% - 126px);align-items:center}.comparison-layout:before{content:'';position:absolute;left:50%;top:0;bottom:0;border-left:1px solid #ffffff50}.comparison-left,.comparison-right{min-width:0}.comparison-main{display:block;width:100%;aspect-ratio:16/10;border:1px solid #ffffff60}.comparison-main img{display:block;width:100%;height:100%;object-fit:contain;transform-origin:top left}.comparison-caption{text-align:center;font-size:18px;line-height:1.6;margin:20px 0 0}.comparison-options{display:flex;flex-direction:column;gap:18px;align-items:center}.comparison-option{display:flex;align-items:center;gap:24px;width:100%;padding:0;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit;font-size:23px}.comparison-option img{display:block;width:46%;aspect-ratio:16/10;object-fit:contain;border:1px solid #ffffff60;transition:border-color .3s}.comparison-option:hover img{border-color:#fff}.comparison-detail h3{font-size:26px;font-weight:400;margin:0 0 24px}.comparison-copy{font-size:18px;line-height:1.9;min-height:200px;white-space:pre-wrap;overflow-wrap:anywhere;outline:none}.comparison-copy:empty:before{content:attr(data-placeholder);color:#ffffff70;pointer-events:none}.comparison-copy:focus{box-shadow:0 1px 0 #ffffff60}.comparison-back{margin-top:24px;padding:8px 14px;border:1px solid #ffffff80;border-radius:22px;background:transparent;color:inherit;font:inherit;font-size:12px;cursor:pointer}.comparison-detail output{display:block;margin-top:12px;font-size:11px;color:#ffffff80}.case02-comparison [hidden]{display:none!important}@media(max-width:700px){.case02-comparison{height:auto;min-height:100svh;padding:6.6667svh 6% 75px}.case02-comparison h2{font-size:clamp(15px,3.2vw,22px)}.comparison-layout{height:auto;grid-template-columns:1fr;gap:40px}.comparison-layout:before{display:none}.comparison-option{font-size:18px}.comparison-caption{font-size:14px}.comparison-detail h3{font-size:22px}.comparison-copy{font-size:14px}}
+
+.comparison-case01-arrow{position:absolute;left:8px;top:50%;transform:translateY(-50%);width:48px;height:64px;display:grid;place-items:center;color:#fff;z-index:3}.comparison-case01-arrow svg{width:40px;height:40px;opacity:.65;transition:opacity .3s}.comparison-case01-arrow path{fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:butt;stroke-linejoin:round}.comparison-case01-arrow:hover svg,.comparison-case01-arrow:focus-visible svg{opacity:1}@media(max-width:700px){.comparison-case01-arrow{left:0;width:25px}.comparison-case01-arrow svg{width:24px;height:24px}}
+
+/* Desktop overview: one equal column per version; retain mobile and detail interactions. */
+@media(min-width:701px){
+ #case02Comparison .comparison-layout{grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;align-items:start}
+ #case02Comparison .comparison-layout:before{display:none}
+ #case02Comparison .comparison-right,#case02Comparison .comparison-options:not([hidden]){display:contents}
+ #case02Comparison .comparison-option{display:flex;flex-direction:column;align-items:stretch;gap:20px;font-size:18px;text-align:center}
+ #case02Comparison .comparison-option img{width:100%;aspect-ratio:16/10;object-fit:contain}
+ #case02Comparison .comparison-caption{font-size:18px;margin-top:20px}
+ #case02Comparison .comparison-layout:has(.comparison-detail:not([hidden])){grid-template-columns:repeat(2,minmax(0,1fr));gap:8%}
+}
+
+/* Three independently editable caption levels beneath each preview. */
+#case02Comparison .comparison-main{display:block;aspect-ratio:auto;overflow:hidden}
+#case02Comparison .comparison-main img{display:block;width:100%;height:auto;max-width:100%;object-fit:contain}
+.comparison-version-card{min-width:0;text-align:center}
+#case02Comparison .comparison-option img{display:block;aspect-ratio:auto;height:auto}
+#case02Comparison .comparison-tier{display:block;width:100%;box-sizing:border-box;text-align:center;white-space:pre-wrap;overflow-wrap:anywhere;outline:none;margin:12px 0 0;min-height:1.5em;line-height:1.6;font-weight:400;cursor:text}
+#case02Comparison .comparison-tier-1{font-size:18px;margin-top:20px}
+#case02Comparison .comparison-tier-2{font-size:14px}
+#case02Comparison .comparison-tier-3{font-size:12px;color:#ffffffb3}
+#case02Comparison .comparison-tier:empty:before{content:attr(data-placeholder);opacity:.45;pointer-events:none}
+#case02Comparison .comparison-tier:focus{box-shadow:0 1px #ffffff60}
+#case02Prototypes,#case02Prototypes~.case02-prototype-toggle{display:none!important}
+@media(max-width:700px){#case02Comparison .comparison-tier-1{font-size:16px}#case02Comparison .comparison-tier-2{font-size:13px}#case02Comparison .comparison-tier-3{font-size:11px}}
+
+/* Mobile overview: four versions share one screen beneath the unchanged heading. */
+@media(max-width:700px){
+ #case02Comparison:not(:has(.comparison-detail:not([hidden]))){height:100dvh;min-height:0;padding-bottom:20px}
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))){height:var(--mobile-comparison-space,60dvh)!important;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:16px 12px;align-items:start}
+ #case02Comparison .comparison-right:has(.comparison-detail[hidden]),#case02Comparison .comparison-options:not([hidden]){display:contents}
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))) .comparison-main,
+ #case02Comparison .comparison-option{height:var(--mobile-comparison-image,120px);width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:center}
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))) .comparison-main img,
+ #case02Comparison .comparison-option img{width:auto;max-width:100%;height:auto;max-height:100%;object-fit:contain;box-sizing:border-box}
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))) .comparison-main{border:0}
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))) .comparison-main img{border:1px solid #ffffff60}
+ #case02Comparison .comparison-tier{margin-top:5px;line-height:1.4}
+ #case02Comparison .comparison-tier-1{font-size:13px;margin-top:8px}
+ #case02Comparison .comparison-tier-2{font-size:11px}
+ #case02Comparison .comparison-tier-3{font-size:10px}
+}
+
+.comparison-type-toggle{position:fixed;right:20px;bottom:70px;z-index:110;padding:9px 15px;border:1px solid #ffffff80;border-radius:24px;background:#111;color:#fff;font:12px/1.4 Latin,CJK,serif;cursor:pointer}
+.comparison-type-panel{position:fixed;right:20px;top:20px;bottom:125px;z-index:135;width:min(330px,calc(100vw - 40px));box-sizing:border-box;overflow:auto;padding:18px;background:#151515fa;border:1px solid #888;border-radius:8px;color:white;font:12px/1.6 Latin,CJK,serif}
+.comparison-type-panel h2{font-size:18px;font-weight:400;margin:0 0 14px}.comparison-type-panel label{display:block;margin:12px 0}.comparison-type-panel input,.comparison-type-panel select,.comparison-type-panel textarea{display:block;width:100%;box-sizing:border-box;margin-top:5px;padding:7px;background:#222;border:1px solid #666;color:white;font:inherit}.comparison-type-panel button{padding:7px 10px;margin:6px 6px 0 0;background:none;border:1px solid #888;color:white;font:inherit;cursor:pointer}.comparison-type-panel output{display:block;margin-top:10px;color:#bbb}.comparison-type-panel[hidden],.comparison-type-toggle[hidden]{display:none!important}
+
+/* Center the four-card composition as one unit below the unchanged heading. */
+@media(min-width:701px){
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))){align-content:center;align-items:start}
+}
+
+#case02Comparison .comparison-heading-context{margin-bottom:12px!important}
+.comparison-explore-cue{display:flex;flex-direction:column;align-items:center;gap:3px;margin:0 auto 18px;padding:0;border:0;background:none;color:inherit;font:12px/1.5 Latin,CJK,serif;cursor:pointer;animation:comparison-explore-breathe 2.8s ease-in-out infinite}
+.comparison-explore-arrow{display:block;font-size:18px;line-height:1;animation:comparison-explore-float 2.8s ease-in-out infinite}
+@keyframes comparison-explore-breathe{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes comparison-explore-float{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+@media(prefers-reduced-motion:reduce){.comparison-explore-cue,.comparison-explore-arrow{animation:none}}
+
+.comparison-explore-arrow svg{display:block;width:24px;height:24px;overflow:visible}.comparison-explore-arrow path{fill:none;stroke:currentColor;stroke-width:.8;stroke-linecap:butt;stroke-linejoin:round}
+
+/* The lower content region begins below the exploration cue's lowest position. */
+#case02Comparison .comparison-explore-cue{padding-bottom:5px}
+@media(max-width:700px){
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))){grid-template-rows:repeat(2,max-content);align-content:center}
+}
+
+/* Center within the arrow-to-bottom-air region; the lower air matches the heading’s top inset. */
+#case02Comparison .comparison-explore-cue{margin-bottom:0}
+
+/* Optical centering: raise the desktop card group without moving its heading or cue. */
+@media(min-width:701px){
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden])))>.comparison-left,
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))) .comparison-version-card{position:relative;top:-24px}
+}
+
+/* Mobile-only placement: content ends at the top of the reserved bottom air. */
+@media(max-width:700px){
+ #case02Comparison .comparison-layout:not(:has(.comparison-detail:not([hidden]))){align-content:end}
+}
+
+.comparison-tier-buttons{display:flex;gap:5px;flex-wrap:wrap}.comparison-tier-buttons button{margin:0;padding:7px 8px}.comparison-tier-buttons button[aria-pressed=true]{background:#ffffff20;border-color:white}.comparison-type-panel label[hidden]{display:none!important}
+
+/* Compact movable controls leave the lower preview composition visible. */
+.comparison-type-panel{top:12px;bottom:auto;left:12px;right:auto;width:min(680px,calc(100vw - 24px));max-height:220px;padding:10px 12px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px 10px;box-shadow:0 4px 20px #0005}
+.comparison-type-panel h2{grid-column:1/-1;font-size:13px;margin:0;cursor:move;touch-action:none;user-select:none}
+.comparison-type-panel .comparison-tier-buttons{grid-column:1/-1}.comparison-type-panel label{margin:0;font-size:10px;min-width:0}.comparison-type-panel input,.comparison-type-panel select,.comparison-type-panel textarea{margin-top:2px;padding:3px;font-size:11px}.comparison-type-panel textarea{height:40px;min-height:0;resize:vertical}.comparison-type-panel p{display:none}.comparison-type-panel button{font-size:10px;padding:4px 7px;margin:0}.comparison-type-panel output{margin:0;font-size:10px;align-self:center}.comparison-type-panel .comparison-tier-buttons button{padding:4px 7px}
+@media(max-width:700px){.comparison-type-panel{grid-template-columns:repeat(3,minmax(0,1fr));max-height:210px;gap:5px 8px}}
+
+/* Keep this compact editor out of the mobile full-page input expansion. */
+html body .comparison-type-panel{position:fixed!important;height:auto!important;max-height:220px!important;overflow:auto!important;bottom:auto!important}
+html body .comparison-type-panel textarea{height:40px!important;min-height:40px!important;max-height:70px!important;overflow:auto!important}
+@media(max-width:700px){html body .comparison-type-panel{max-height:210px!important}}

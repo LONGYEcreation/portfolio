@@ -1,0 +1,55 @@
+.case02-evaluation{position:absolute;left:0;width:100%;height:100svh;min-height:600px;box-sizing:border-box;padding:6.6667svh 4.2361%;color:#fff;display:flex;flex-direction:column}
+.case02-evaluation h2{font-size:clamp(22px,min(2.2222vw,3.5556svh),48px);font-weight:400;line-height:1.4;text-align:center;margin:0}.case02-evaluation h2 span{display:block}
+.evaluation-content{width:100%;max-width:1400px;margin:auto;box-sizing:border-box;padding:36px 0}.case02-evaluation table{width:100%;border-collapse:collapse;text-align:left;font-size:clamp(14px,1.2vw,21px);line-height:1.8}.case02-evaluation th,.case02-evaluation td{padding:22px 24px;border-bottom:1px solid #ffffff35;vertical-align:top}.case02-evaluation thead th{font-weight:600;border-top:1px solid #ffffff80;border-bottom-color:#ffffff80}.case02-evaluation tbody th{width:18%;font-weight:400;white-space:nowrap}.case02-evaluation td{width:41%}.evaluation-decision{margin-top:44px;font-size:clamp(12px,1vw,17px);line-height:1.9}.evaluation-decision h3{font:inherit;font-weight:600;margin:0 0 16px}.evaluation-decision p{margin:0;padding-left:18px;border-left:1px solid #ffffff80}
+@media(max-width:700px){.case02-evaluation{height:auto;min-height:100dvh;padding:6.6667svh 6% 24px}.case02-evaluation h2{font-size:clamp(15px,3.2vw,22px)}.evaluation-content{padding:30px 0;margin:auto 0}.case02-evaluation table{font-size:12px;line-height:1.75}.case02-evaluation th,.case02-evaluation td{padding:14px 8px}.case02-evaluation tbody th{width:22%}.case02-evaluation td{width:39%}.evaluation-decision{margin-top:28px;font-size:11px;line-height:1.85}.evaluation-decision h3{margin-bottom:12px}.evaluation-decision p{padding-left:12px}}
+
+/* Match the actual saved English heading size of the prototype screen. */
+@media(min-width:701px){.case02-evaluation h2 span:nth-child(2){font-size:var(--evaluation-english-size,32px)}}
+
+@media(max-width:700px){
+ .case02-evaluation h2 span:first-child{font-size:var(--evaluation-chinese-size,22px)}
+ .case02-evaluation h2 span:nth-child(2){font-size:var(--evaluation-english-size,22px)}
+}
+
+/* Centered text alignment preview for the comparison table and decision copy. */
+.case02-evaluation table,.case02-evaluation th,.case02-evaluation td,.case02-evaluation .evaluation-decision{text-align:center}
+
+.case02-evaluation .evaluation-decision{text-align:left}
+
+.evaluation-decision p{white-space:pre-wrap;box-sizing:border-box}
+.evaluation-edit-toggle{position:fixed;right:20px;bottom:70px;z-index:110;padding:8px 14px;border:1px solid #888;border-radius:24px;background:#111;color:white;font:12px/1.5 Latin,CJK,serif;cursor:pointer}
+.evaluation-edit-panel{position:fixed;top:12px;left:12px;bottom:auto;z-index:140;width:min(580px,calc(100vw - 24px));height:auto!important;max-height:220px!important;overflow:auto!important;box-sizing:border-box;padding:12px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;background:#151515fa;border:1px solid #888;border-radius:8px;color:white;font:11px/1.5 Latin,CJK,serif}.evaluation-edit-panel h2{grid-column:1/-1;font-size:13px;font-weight:400;margin:0}.evaluation-edit-panel label{display:block;min-width:0}.evaluation-edit-panel .evaluation-copy-field{grid-column:1/-1}.evaluation-edit-panel textarea,.evaluation-edit-panel input{display:block;width:100%;box-sizing:border-box;padding:4px;background:#222;color:#fff;border:1px solid #777;font:inherit}.evaluation-edit-panel textarea{height:48px!important;min-height:48px!important;max-height:70px!important;overflow:auto!important;resize:vertical}.evaluation-edit-panel button{background:none;border:1px solid #888;color:white;font:inherit;cursor:pointer}.evaluation-edit-panel[hidden],.evaluation-edit-toggle[hidden]{display:none!important}
+
+/* Desktop composition approved from the two reference screenshots. */
+@media(min-width:701px){
+ .case02-evaluation .evaluation-content{position:absolute;left:50%;top:26.5653%;transform:translateX(-50%);width:calc(100% - 8.4722%);margin:0;padding:0}
+ .case02-evaluation .evaluation-decision{margin-top:var(--evaluation-reference-gap,64px)!important}
+}
+
+/* Optical adjustment moves the entire body composition together. */
+@media(min-width:701px){.case02-evaluation .evaluation-content{translate:0 -6px}}
+
+#case02Evaluation [contenteditable="plaintext-only"]{outline:none;cursor:text;white-space:pre-wrap}#case02Evaluation [contenteditable="plaintext-only"]:focus{box-shadow:inset 0 -1px #ffffff70}
+
+/* Compact mobile table: preserve three-column comparison and improve narrow-screen wrapping. */
+@media(max-width:700px){
+ #case02Evaluation{height:auto;min-height:100dvh}
+ #case02Evaluation .evaluation-content{margin:30px 0 0;padding:0 0 28px;width:100%;max-width:none}
+ #case02Evaluation table{width:100%;table-layout:fixed;border-collapse:collapse;font-size:12px;line-height:1.75}
+ #case02Evaluation th,#case02Evaluation td{padding:15px 7px;vertical-align:middle;text-align:center;overflow-wrap:anywhere;word-break:normal}
+ #case02Evaluation thead th:first-child,#case02Evaluation tbody th{width:20%;white-space:normal}
+ #case02Evaluation thead th:nth-child(2),#case02Evaluation td:nth-child(2){width:42%}
+ #case02Evaluation thead th:nth-child(3),#case02Evaluation td:nth-child(3){width:38%}
+ #case02Evaluation thead th{font-size:12px;font-weight:600}
+ #case02Evaluation tbody th{font-size:12px;font-weight:400}
+ #case02Evaluation .evaluation-decision{margin-top:28px;text-align:left}
+ #case02Evaluation .evaluation-decision p{max-width:100%}
+}
+
+/* Mobile body composition: distribute remaining air around the complete text block. */
+@media(max-width:700px){
+ #case02Evaluation .evaluation-content{margin-top:auto;margin-bottom:auto;translate:0 -6px}
+}
+
+/* Saved manual line breaks remain visible in presentation mode too. */
+#case02Evaluation table th,#case02Evaluation table td{white-space:pre-wrap}

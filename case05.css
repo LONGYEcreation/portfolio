@@ -1,0 +1,25 @@
+
+.visual-archive{padding:55px 4.2361% 70px;scroll-margin-top:0}
+.archive-heading{display:flex;justify-content:space-between;align-items:baseline;gap:24px;border-bottom:1px solid #ffffff70;padding-bottom:16px;font-size:11px;line-height:1.6;letter-spacing:.065em}
+.archive-heading>span:last-child{text-align:right}
+.archive-intro{font-size:15px;line-height:1.9;max-width:700px;margin:28px 0 40px;color:#ffffffc7}
+.archive-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px 24px;align-items:start}
+.archive-piece{margin:0;min-width:0;grid-column:span 4}
+.archive-piece button{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.archive-piece img{display:block;width:100%;height:auto}
+.archive-piece figcaption{font-family:"Case Navigation Latin",serif;font-variant-numeric:oldstyle-nums proportional-nums;font-size:11px;color:#ffffffa6;margin-top:10px}
+.archive-style .archive-piece:nth-child(4),.archive-style .archive-piece:nth-child(5){grid-column:span 6}
+.archive-style .archive-piece:nth-child(n+9){grid-column:span 3}
+.archive-theme .archive-piece:nth-child(-n+2){grid-column:span 6}
+.archive-theme .archive-piece:nth-child(n+6){grid-column:span 3}
+.visual-archive [data-nit-copy]{outline:none;white-space:pre-wrap}
+@media(max-width:700px){.visual-archive{padding:35px 6% 45px}.archive-heading{font-size:9px;gap:16px}.archive-intro{font-size:13px;margin:20px 0 26px}.archive-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 12px}.archive-grid .archive-piece{grid-column:span 1}.archive-grid .archive-piece:nth-child(5n+1){grid-column:1/-1}.archive-piece figcaption{font-size:9px;margin-top:7px}}
+
+@media(max-width:700px){.archive-grid .archive-piece{grid-column:span 1!important}.archive-grid .archive-piece:nth-child(5n+1){grid-column:1/-1!important}}
+
+/* Additional poster fills the final mobile pair only. */
+.archive-grid>.mobile-only-piece{display:none}
+@media(max-width:700px){.archive-grid.archive-style>.mobile-only-piece{display:block;grid-column:span 1!important}}
+
+/* Optical centering inside mobile entry frames; keep frame geometry. */
+@media(max-width:700px){.brand-entries a>.case04-number,.brand-entries a>strong,.brand-entries a>small{translate:0 -2px}}

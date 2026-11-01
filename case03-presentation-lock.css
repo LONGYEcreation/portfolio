@@ -1,0 +1,2 @@
+.text-toggle,.text-editor,.shared-body-toggle,.shared-body-panel,.edit-toggle,.copy-editor{display:none!important}
+[contenteditable]{outline:none!important;box-shadow:none!important;cursor:inherit!important}

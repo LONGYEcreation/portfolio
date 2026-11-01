@@ -1,0 +1,5 @@
+/* CASE04–06 editing is locked; saved content and layout still load normally. */
+.edit-toggle,.copy-editor{display:none!important}
+[data-v3-edit],[data-nit-copy],[contenteditable]{outline:none!important;cursor:inherit}
+
+header .brand[contenteditable="false"]:focus{box-shadow:none!important;outline:none!important}

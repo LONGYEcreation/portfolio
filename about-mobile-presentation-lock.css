@@ -1,0 +1,5 @@
+/* Approved original ABOUT layout: presentation mode on desktop and mobile. */
+.about-text-toggle,.about-text-editor,.subnav-settings,.profile-subadd{display:none!important}
+#aboutLayout [contenteditable]{outline:none!important;box-shadow:none!important;cursor:inherit!important}
+#aboutLayout .profile-subname{cursor:pointer!important}
+

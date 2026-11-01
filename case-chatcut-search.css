@@ -1,0 +1,114 @@
+
+.research-chatcut-note>span[contenteditable]{outline:none;cursor:pointer}
+.research-chatcut-note>span[contenteditable]:focus{box-shadow:0 1px 0 #ffffff60}
+.chatcut-search-view{position:absolute;left:var(--search-edge,4.2361%);right:var(--search-edge,4.2361%);top:var(--search-rule-top,21.7778%);border-top:1px solid #ffffff80;z-index:4;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility .45s ease}
+.chatcut-search-open .chatcut-search-view{opacity:1;visibility:visible;pointer-events:auto}
+.chatcut-search-content{position:relative;text-align:center;padding:36px 40px 20px}
+.chatcut-search-index{font-size:12px;line-height:1.5;letter-spacing:.08em;margin-bottom:12px}
+.chatcut-search-title{font-size:clamp(22px,2.5vw,38px);line-height:1.5;font-weight:400;margin:0;outline:none}
+.chatcut-search-back{position:absolute;left:0;top:36px;display:flex;justify-content:center;align-items:center;border:0;padding:0;width:28px;height:24px;color:#fff;background:none;cursor:pointer}
+.chatcut-search-back svg{display:block;width:18px;height:18px}
+.chatcut-search-open .research-options,.chatcut-search-open .research-overview-copy-group,.chatcut-search-open .solution-frame,.chatcut-search-open .research-exploration-path,.chatcut-search-open>.research-chatcut-note,.chatcut-search-open .research-intro-next,.chatcut-search-open .research-intro-back{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+.chatcut-search-open:after{background:linear-gradient(to bottom,#ffffff80 0,#ffffff80 calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-cross-offset) + 12px),#ffffff80 calc(var(--search-cross-offset) + 12px),#ffffff80 100%)!important;opacity:1!important}
+@media(max-width:700px){.chatcut-search-content{padding:28px 30px 20px}.chatcut-search-back{top:28px}.chatcut-search-index{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.chatcut-search-view{transition:none}}
+
+/* Match the issue-card translucent white band across both columns. */
+.chatcut-search-content{height:var(--search-mask-height,180px);box-sizing:border-box;background:var(--search-mask-color,#ffffff12);border-bottom:1px solid #ffffff80;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:20px;padding-bottom:20px}
+.chatcut-search-open:after{background:linear-gradient(to bottom,#ffffff80 0,#ffffff80 calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-mask-end-offset) + 12px),#ffffff80 calc(var(--search-mask-end-offset) + 12px),#ffffff80 100%)!important}
+
+.case-research>.chatcut-search-back{left:50%;right:auto;transform:translateX(-50%);width:28px;height:24px;z-index:7;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility .45s ease}
+.case-research.chatcut-search-open>.chatcut-search-back{opacity:1;visibility:visible;pointer-events:auto}
+.case-research>.chatcut-search-back svg{width:24px;height:24px}
+@media(prefers-reduced-motion:reduce){.case-research>.chatcut-search-back{transition:none}}
+
+body .chatcut-search-adjust-toggle{display:none}
+body:has(.chatcut-search-open) .chatcut-search-adjust-toggle{display:block;right:18px}
+body:has(.chatcut-search-open) .research-adjust-toggle:not(.chatcut-search-adjust-toggle){display:none}
+.chatcut-search-editor{z-index:112}
+
+/* Compact heading band; preserve independently edited text styles. */
+.chatcut-search-content{padding-top:12px;padding-bottom:12px}
+.chatcut-search-index,.chatcut-search-title{flex-shrink:0}
+
+/* Center the visible number/title group within the heading band. */
+.chatcut-search-index,.chatcut-search-title{width:100%;text-align:center;transform:translateY(var(--search-text-center-y,0px))}
+
+/* Search-page entrance: clear the previous view, open the band, then resolve the type. */
+.chatcut-search-preparing .research-options,.chatcut-search-preparing .solution-frame,.chatcut-search-preparing>.research-chatcut-note{opacity:0!important;pointer-events:none!important;transition:opacity .18s ease!important}
+.chatcut-search-entering .chatcut-search-view{animation:chatcut-band-open .7s cubic-bezier(.22,.7,.2,1) both}
+.chatcut-search-entering .chatcut-search-index,.chatcut-search-entering .chatcut-search-title{animation:chatcut-type-arrive .7s cubic-bezier(.16,.7,.22,1) .22s both}
+.chatcut-search-entering:after{animation:chatcut-axis-extend .65s cubic-bezier(.22,.7,.2,1) .48s both}
+.chatcut-search-entering>.chatcut-search-back{animation:chatcut-back-arrive .4s ease .35s both}
+@keyframes chatcut-band-open{from{clip-path:inset(0 49.8% 0 49.8%);opacity:0}to{clip-path:inset(0);opacity:1}}
+@keyframes chatcut-type-arrive{from{opacity:0;translate:0 12px}to{opacity:1;translate:0 0}}
+@keyframes chatcut-axis-extend{from{clip-path:inset(0 0 max(0px,calc(100% - var(--search-mask-end-offset) - 12px)) 0)}to{clip-path:inset(0)}}
+@keyframes chatcut-back-arrive{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.chatcut-search-entering .chatcut-search-view,.chatcut-search-entering .chatcut-search-index,.chatcut-search-entering .chatcut-search-title,.chatcut-search-entering:after,.chatcut-search-entering>.chatcut-search-back{animation:none}}
+
+/* Original results on the left, revised results on the right. */
+.chatcut-search-comparison{position:absolute;left:var(--search-edge,4.2361%);right:var(--search-edge,4.2361%);top:var(--search-images-top,45%);bottom:5.66665%;z-index:4;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8.3333vw;align-items:start;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:#ffffff65 transparent;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .45s ease,visibility .45s ease}
+.chatcut-search-open .chatcut-search-comparison{opacity:1;visibility:visible;pointer-events:auto}
+.chatcut-search-image-column{display:grid;gap:24px;min-width:0;padding-bottom:12px}
+.chatcut-search-image-column img{display:block;width:100%;height:auto;object-fit:contain}
+.chatcut-search-entering .chatcut-search-comparison{animation:chatcut-back-arrive .6s ease .55s both}
+@media(max-width:700px){.chatcut-search-comparison{gap:20px}.chatcut-search-image-column{gap:16px}}
+@media(prefers-reduced-motion:reduce){.chatcut-search-comparison{transition:none;animation:none!important}}
+
+/* Language switching stays inside the comparison area; the heading band is unchanged. */
+.chatcut-search-comparison{overflow:hidden;grid-template-rows:28px minmax(0,1fr);column-gap:8.3333vw;row-gap:14px;align-items:stretch}
+.chatcut-search-language{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:12px;color:#ffffff80;font-size:13px;line-height:1}
+.chatcut-search-language button{border:0;background:none;padding:4px 2px;color:#ffffff80;font:inherit;cursor:pointer}
+.chatcut-search-language button[aria-pressed="true"]{color:#fff;text-decoration:underline;text-underline-offset:5px}
+.chatcut-search-language button:hover{color:#fff}.chatcut-search-language button:focus-visible{outline:1px solid #fff;outline-offset:3px}
+.chatcut-search-image-column{display:flex;justify-content:center;align-items:flex-start;min-height:0;overflow:hidden;padding:0}
+.chatcut-search-image-column img{width:auto;height:auto;max-width:100%;max-height:100%;object-fit:contain}
+.chatcut-search-image-column img[hidden]{display:none!important}
+@media(max-width:700px){.chatcut-search-comparison{column-gap:20px;row-gap:10px}.chatcut-search-language{font-size:12px}}
+
+/* Stack the two language entries and interrupt the central rule behind them. */
+.chatcut-search-comparison{grid-template-rows:76px minmax(0,1fr)}
+.chatcut-search-language{flex-direction:column;gap:8px;justify-content:center;align-self:stretch}
+.chatcut-search-language>span{display:block;width:64px;height:1px;background:#ffffff65;flex:none}
+.chatcut-search-language button{padding:5px 2px}
+.chatcut-search-open:after{mask-image:linear-gradient(to bottom,#000 0,#000 var(--search-language-start),transparent var(--search-language-start),transparent var(--search-language-end),#000 var(--search-language-end),#000 100%)}
+
+/* Desktop language controls share the images' top edge. */
+.chatcut-search-comparison{grid-template-rows:minmax(0,1fr);row-gap:0}
+.chatcut-search-language{position:absolute;left:50%;top:0;transform:translateX(-50%);width:76px;justify-content:flex-start;gap:10px;z-index:1;line-height:18px}
+.chatcut-search-language button,.chatcut-search-language button[aria-pressed="true"]{padding:0 2px;text-decoration:none;line-height:18px}
+.chatcut-search-language>span{width:64px}
+/* Phones retain both language images in each column, without paging. */
+@media(max-width:700px){
+ .chatcut-search-language{display:none}
+ .chatcut-search-comparison{overflow-y:auto;scrollbar-width:none;row-gap:0}
+ .chatcut-search-comparison::-webkit-scrollbar{display:none}
+ .chatcut-search-image-column{display:grid;gap:16px;align-content:start;overflow:visible;min-height:auto;padding-bottom:12px}
+ .chatcut-search-image-column img,.chatcut-search-image-column img[hidden]{display:block!important;width:100%;height:auto;max-height:none}
+ .chatcut-search-open:after{mask-image:none}
+}
+
+/* Match every language-control clearance to the 12px divider/band gap. */
+@media(min-width:701px){.chatcut-search-language{gap:0}.chatcut-search-language button{display:block;height:18px;flex:none}.chatcut-search-language>span{margin:0;flex:none}}
+
+/* One continuous interruption prevents a stray segment above the language entries. */
+@media(min-width:701px){.chatcut-search-open:after{mask-image:none;background:linear-gradient(to bottom,#ffffff80 0,#ffffff80 calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-cross-offset) - 12px),transparent var(--search-language-end),#ffffff80 var(--search-language-end),#ffffff80 100%)!important}}
+
+/* Keep the short upper rule, with 12px clearances on both ends. */
+@media(min-width:701px){.chatcut-search-open:after{mask-image:none;background:linear-gradient(to bottom,#ffffff80 0,#ffffff80 calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-cross-offset) - 12px),transparent calc(var(--search-mask-end-offset) + 12px),#ffffff80 calc(var(--search-mask-end-offset) + 12px),#ffffff80 var(--search-language-start),transparent var(--search-language-start),transparent var(--search-language-end),#ffffff80 var(--search-language-end),#ffffff80 100%)!important}}
+@media(max-width:700px){.chatcut-search-comparison{top:calc(var(--search-images-top) - 24px)}}
+
+/* The connected center divider is a continuous entrance, with a comfortable hit width. */
+.chatcut-axis-entry{display:none;position:absolute;left:50%;transform:translateX(-50%);width:28px;border:0;padding:0;background:transparent;z-index:2;cursor:pointer}
+.case-research.research-detail-open:not(.research-summary-open):not(.chatcut-search-open):has(.research-option[data-problem="0"].research-active):has(.research-detail-copy:not(.value-subview-hidden))>.chatcut-axis-entry{display:block}
+.chatcut-axis-entry:focus-visible{outline:1px solid #ffffff80;outline-offset:3px}
+
+/* Return to issue 01 with the same restrained center-axis motion. */
+.case-research.chatcut-search-returning:after{animation:chatcut-return-axis .75s cubic-bezier(.22,.7,.2,1) both!important}
+.case-research.chatcut-search-returning>.research-chatcut-note{animation:chatcut-return-caption .45s ease .45s both!important}
+@keyframes chatcut-return-axis{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0)}}
+@keyframes chatcut-return-caption{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.case-research.chatcut-search-returning:after,.case-research.chatcut-search-returning>.research-chatcut-note{animation:none!important}}
+
+.research-chatcut-note>svg[role="button"]{cursor:pointer;pointer-events:auto}
+.research-chatcut-note>svg[role="button"]:focus-visible{outline:1px solid #ffffff80;outline-offset:3px}

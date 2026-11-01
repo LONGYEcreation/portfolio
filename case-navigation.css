@@ -1,0 +1,12 @@
+/* One footer layout, shared by CASE01, CASE02 and CASE03. */
+@font-face{font-family:"Case Navigation Latin";src:local("Big Caslon"),local("BigCaslon-Medium"),local("Baskerville"),local("Times New Roman");font-weight:100 900;unicode-range:U+0000-024F,U+2000-206F,U+2190-21FF}
+@font-face{font-family:"Case Navigation CJK";src:url('assets/NotoSerifSC-VF.ttf');font-weight:100 900;font-display:swap;unicode-range:U+2E80-9FFF,U+F900-FAFF,U+3000-303F,U+FF00-FFEF}
+body .case-navigation{position:fixed;left:28px;right:28px;bottom:25px;top:auto;z-index:20;display:flex;justify-content:space-between;align-items:center;margin:0;padding:0;pointer-events:none}
+body .case-navigation>div{display:flex;align-items:center;gap:12px;margin:0;padding:0}
+body .case-navigation a{font-family:"Case Navigation Latin","Case Navigation CJK",serif!important;font-size:12px!important;font-weight:400!important;line-height:1.4!important;letter-spacing:.05em!important;pointer-events:auto;text-decoration:none;margin:0;padding:0}
+body .case-navigation>div>span{font-family:"Case Navigation Latin","Case Navigation CJK",serif!important;font-size:10px!important;font-weight:400!important;line-height:1.4!important;letter-spacing:0!important;white-space:nowrap;pointer-events:none;margin:0;padding:0;animation:case-navigation-breathe 2.8s ease-in-out infinite}
+body .case-navigation a:active{text-decoration:underline;text-underline-offset:4px}
+body.case01-scrolled .case-navigation a,body .case-navigation.is-hidden a{pointer-events:none}
+@keyframes case-navigation-breathe{0%,100%{opacity:1}50%{opacity:.3}}
+@media(max-width:700px){body .case-navigation{left:14px;right:14px;bottom:20px}body .case-navigation>div{gap:7px}body .case-navigation a{font-size:9px!important}body .case-navigation>div>span{font-size:8px!important}}
+@media(prefers-reduced-motion:reduce){body .case-navigation>div>span{animation:none}}
