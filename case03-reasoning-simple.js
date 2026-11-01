@@ -16,7 +16,7 @@ section.style.removeProperty('min-height');section.style.removeProperty('height'
 if(!desktop){figure.style.top=(reference.offsetTop+head.offsetHeight+36)+'px';figure.style.bottom='auto';figure.style.height=(image.naturalWidth?figure.clientWidth*image.naturalHeight/image.naturalWidth:0)+'px'}else{figure.style.removeProperty('height')}
 const r=image.getBoundingClientRect(),s=section.getBoundingClientRect();const center=r.height?r.top+r.height/2-s.top:figure.offsetTop+figure.clientHeight/2;for(const button of [previous,next])button.style.top=center+'px';
 }
-function render(){image.src=current===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(current).padStart(2,'0')+'.png';image.alt='产品推演 PDF 第 '+current+' 页';previous.setAttribute('aria-label','上一页：PDF 第 '+(current===6?14:current-1)+' 页');next.setAttribute('aria-label','下一页：PDF 第 '+(current===14?6:current+1)+' 页');fit()}
+function render(){image.src=current===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(current).padStart(2,'0')+'.png';image.alt='产品推演 PDF 第 '+current+' 页';previous.setAttribute('aria-label','上一页：PDF 第 '+(current===6?14:current-1)+' 页');next.setAttribute('aria-label','下一页：PDF 第 '+(current===14?6:current+1)+' 页');if(dialog.open&&matchMedia('(max-width:700px)').matches){sourceImage.src=image.src;sourceImage.alt=image.alt;document.querySelector('#sourceTitle').textContent='产品推演';document.querySelector('#sourceScroll').scrollTo(0,0)}fit()}
 let turnRevision=0;
 function select(page){
  const nextPage=page<6?14:page>14?6:page;if(nextPage===current)return;
@@ -27,7 +27,7 @@ function select(page){
   if(revision!==turnRevision)return;
   figure.querySelectorAll('.reasoning-turn-old').forEach(node=>node.remove());
   image.getAnimations().forEach(animation=>animation.cancel());
-  if(matchMedia('(min-width:701px)').matches){current=nextPage;render();return}
+  if(matchMedia('(min-width:701px)').matches||dialog.open){current=nextPage;render();return}
   const old=image.cloneNode();old.removeAttribute('id');old.className='reasoning-turn-old';old.removeAttribute('tabindex');old.removeAttribute('role');old.setAttribute('aria-hidden','true');
   const rect=image.getBoundingClientRect(),frame=figure.getBoundingClientRect();
   old.style.cssText='position:absolute;left:'+(rect.left-frame.left)+'px;top:'+(rect.top-frame.top)+'px;width:'+rect.width+'px;height:'+rect.height+'px;max-width:none;max-height:none;object-fit:contain;object-position:center;pointer-events:none';
@@ -42,7 +42,12 @@ function select(page){
 }
 previous.onclick=()=>select(current-1);next.onclick=()=>select(current+1);
 const dialog=document.querySelector('#sourceDialog'),sourceImage=document.querySelector('#sourceImage'),wrap=document.querySelector('#sourceImageWrap');
-function open(){sourceImage.src=image.src;document.querySelector('#sourceTitle').textContent='产品推演 · '+current+' / 14';wrap.classList.add('original','full-page');dialog.showModal();document.querySelector('#sourceScroll').scrollTo(0,0)}
+function open(){sourceImage.src=image.src;document.querySelector('#sourceTitle').textContent=matchMedia('(max-width:700px)').matches?'产品推演':'产品推演 · '+current+' / 14';wrap.classList.add('original','full-page');dialog.showModal();document.querySelector('#sourceScroll').scrollTo(0,0)}
+let modalSwipe=null;function zoomed(){const m=sourceImage.style.transform.match(/scale\(([^)]+)\)/);return m&&parseFloat(m[1])>1.01}
+dialog.addEventListener('touchstart',e=>{modalSwipe=null;if(!matchMedia('(max-width:700px)').matches||!dialog.open||e.touches.length!==1||zoomed()||e.target.closest('button'))return;modalSwipe={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+dialog.addEventListener('touchmove',e=>{if(e.touches.length!==1)modalSwipe=null},{passive:true});
+dialog.addEventListener('touchend',e=>{if(!modalSwipe)return;const point=e.changedTouches[0],dx=point.clientX-modalSwipe.x,dy=point.clientY-modalSwipe.y;modalSwipe=null;if(!zoomed()&&Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy))select(current+(dx<0?1:-1))},{passive:true});
+dialog.addEventListener('touchcancel',()=>modalSwipe=null,{passive:true});dialog.addEventListener('close',()=>modalSwipe=null);
 let swipeStart=null,suppressClickUntil=0;
 figure.addEventListener('touchstart',event=>{if(!matchMedia('(max-width:700px)').matches||event.touches.length!==1)return;swipeStart={x:event.touches[0].clientX,y:event.touches[0].clientY}},{passive:true});
 figure.addEventListener('touchend',event=>{if(!swipeStart)return;const point=event.changedTouches[0],dx=point.clientX-swipeStart.x,dy=point.clientY-swipeStart.y;swipeStart=null;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){suppressClickUntil=performance.now()+700;select(current+(dx<0?1:-1))}},{passive:true});
