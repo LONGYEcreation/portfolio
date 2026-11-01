@@ -27,11 +27,12 @@ let current=0;
 const arrowMarkup='<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M12 50H88M49 12C56 31 71 46 88 50M49 88C56 69 71 54 88 50"/></svg>';
 function makeArrow(back){const button=document.createElement('button');button.type='button';button.className='practice-series-arrow'+(back?' practice-series-previous is-back':'');button.setAttribute('aria-controls','websiteCaptureImage');button.innerHTML=arrowMarkup;band.append(button);return button}
 const previous=makeArrow(true),next=makeArrow(false);
-const preparedCaptures=new Map();let mobileCaptureRequest=0;
+const preparedCaptures=new Map();let mobileCaptureRequest=0,mobileCaptureTarget=null;
 function prepareCapture(src){if(!preparedCaptures.has(src)){const image=new Image();image.decoding='async';const ready=new Promise((resolve,reject)=>{image.onload=()=>image.decode().then(()=>resolve(image),reject);image.onerror=()=>reject(new Error('Capture image failed to load'));image.src=src});preparedCaptures.set(src,ready);ready.catch(()=>preparedCaptures.delete(src))}return preparedCaptures.get(src)}
 function renderCapture(){const page=pages[current];index.textContent=page.index;title.textContent=page.title;capture.src=page.src;capture.alt=page.alt;fullCapture.src=page.src;fullCapture.alt=page.alt;openCapture.setAttribute('aria-label','放大泥吞象主页'+page.title+'图片');dialog.setAttribute('aria-label','泥吞象官网'+page.title+'截图');previous.hidden=false;previous.disabled=false;next.hidden=false;next.disabled=false;const before=pages[(current-1+pages.length)%pages.length],after=pages[(current+1)%pages.length];previous.setAttribute('aria-label','返回 '+before.index+' '+before.title);next.setAttribute('aria-label','进入 '+after.index+' '+after.title);next.title='进入 '+after.index+' '+after.title;place();if(matchMedia('(max-width:700px)').matches)prepareCapture(after.src).catch(()=>{})}
-previous.addEventListener('click',()=>{current=(current-1+pages.length)%pages.length;renderCapture()});
-next.addEventListener('click',()=>{current=(current+1)%pages.length;renderCapture()});
+async function switchMobileCapture(delta){const target=((mobileCaptureTarget??current)+delta+pages.length)%pages.length,request=++mobileCaptureRequest;mobileCaptureTarget=target;try{await prepareCapture(pages[target].src);if(request!==mobileCaptureRequest)return false;capture.loading='eager';capture.decoding='sync';capture.src=pages[target].src;await capture.decode();if(request!==mobileCaptureRequest)return false;current=target;mobileCaptureTarget=null;renderCapture();applyEdits();if(!editor.hidden)loadEditor();return true}catch{if(request===mobileCaptureRequest){mobileCaptureTarget=null;capture.src=pages[current].src}return false}}
+previous.addEventListener('click',()=>{if(matchMedia('(max-width:700px)').matches){switchMobileCapture(-1);return}mobileCaptureRequest++;mobileCaptureTarget=null;current=(current-1+pages.length)%pages.length;renderCapture()});
+next.addEventListener('click',()=>{if(matchMedia('(max-width:700px)').matches){switchMobileCapture(1);return}mobileCaptureRequest++;mobileCaptureTarget=null;current=(current+1)%pages.length;renderCapture()});
 // Mobile finger swipes use the same page controls, with visible motion inside the frame.
 let websiteTouch=null,suppressWebsiteClickUntil=0;
 openCapture.addEventListener('touchstart',event=>{if(!matchMedia('(max-width:700px)').matches||event.touches.length!==1)return;websiteTouch={x:event.touches[0].clientX,y:event.touches[0].clientY}},{passive:true});
@@ -40,13 +41,11 @@ openCapture.addEventListener('touchend',async event=>{
  const point=event.changedTouches[0],dx=point.clientX-websiteTouch.x,dy=point.clientY-websiteTouch.y;websiteTouch=null;
  if(Math.abs(dx)<=45||Math.abs(dx)<=Math.abs(dy))return;
  suppressWebsiteClickUntil=performance.now()+700;
- const direction=dx<0?1:-1,target=(current+direction+pages.length)%pages.length,request=++mobileCaptureRequest;
- try{await prepareCapture(pages[target].src)}catch{return}
- if(request!==mobileCaptureRequest||!matchMedia('(max-width:700px)').matches)return;
+ const direction=dx<0?1:-1,old=capture.cloneNode(),rect=capture.getBoundingClientRect(),parent=openCapture.getBoundingClientRect();
+ old.removeAttribute('id');old.className='website-touch-old';old.setAttribute('aria-hidden','true');old.style.cssText='position:absolute;left:'+(rect.left-parent.left)+'px;top:'+(rect.top-parent.top)+'px;width:'+rect.width+'px;height:'+rect.height+'px;max-width:none;max-height:none;pointer-events:none';
+ if(!await switchMobileCapture(direction))return;
  suppressWebsiteClickUntil=performance.now()+700;
- const old=capture.cloneNode(),rect=capture.getBoundingClientRect(),parent=openCapture.getBoundingClientRect();
- old.removeAttribute('id');old.setAttribute('aria-hidden','true');old.style.cssText='position:absolute;left:'+(rect.left-parent.left)+'px;top:'+(rect.top-parent.top)+'px;width:'+rect.width+'px;height:'+rect.height+'px;max-width:none;max-height:none;pointer-events:none';
- (direction>0?next:previous).click();
+ openCapture.querySelectorAll('.website-touch-old').forEach(n=>n.remove());capture.getAnimations().forEach(a=>a.cancel());
  if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
  openCapture.append(old);
  capture.animate([{transform:'translateX('+(direction*100)+'%)'},{transform:'translateX(0)'}],{duration:420,easing:'cubic-bezier(.22,.61,.36,1)'});
@@ -92,6 +91,6 @@ editButton.onclick=()=>{editor.hidden=!editor.hidden;if(!editor.hidden)loadEdito
 editCopy.oninput=()=>{const id=editId(editTarget.value);edits[id]={...(edits[id]||{}),text:editCopy.value};applyEdits();saveEdits()};
 fields.forEach(input=>input.addEventListener('input',()=>{if(input.value==='')return;const prop=input.dataset.coverStyle;let value=prop==='textAlign'?input.value:Number(input.value);if(typeof value==='number'){if(!Number.isFinite(value))return;if(input.min)value=Math.max(Number(input.min),value);if(input.max)value=Math.min(Number(input.max),value)}const id=editId(editTarget.value);edits[id]={...(edits[id]||{}),style:{...(edits[id]?.style||{}),[prop]:value}};applyEdits();saveEdits()}));
 for(const button of [previous,next])button.addEventListener('click',()=>{applyEdits();if(!editor.hidden)loadEditor()});applyEdits();
-new IntersectionObserver(entries=>{const visible=entries[0].isIntersecting;editButton.hidden=!visible;shortcut.hidden=!visible;if(!visible){mobileCaptureRequest++;editor.hidden=true;current=0;renderCapture();applyEdits()}},{threshold:.5}).observe(section);
+new IntersectionObserver(entries=>{const visible=entries[0].isIntersecting;editButton.hidden=!visible;shortcut.hidden=!visible;if(!visible){mobileCaptureRequest++;mobileCaptureTarget=null;editor.hidden=true;current=0;renderCapture();applyEdits()}},{threshold:.5}).observe(section);
 shortcut.hidden=true;
 })();
