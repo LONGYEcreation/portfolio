@@ -6,6 +6,7 @@ const figure=document.createElement('figure');figure.className='reasoning-simple
 const arrowSVG='<svg viewBox="0 0 100 100" aria-hidden="true"><path d="M12 50H88M49 12C56 31 71 46 88 50M49 88C56 69 71 54 88 50"/></svg>';
 function arrow(back){const button=document.createElement('button');button.type='button';button.className='reasoning-simple-arrow '+(back?'is-previous':'is-next');button.innerHTML=arrowSVG;return button}
 const previous=arrow(true),next=arrow(false);section.append(head,figure,previous,next);
+const caption=document.createElement('p');caption.className='reasoning-desktop-caption';caption.innerHTML='<span></span>';section.append(caption);
 let current=6;const key='jiali-case03-nitunxiang-refresh-v1',reload=performance.getEntriesByType('navigation')[0]?.type==='reload';
 new IntersectionObserver(entries=>{if(entries[0].intersectionRatio<.01)select(6)},{threshold:[0,.01]}).observe(section);
 function fit(){const reference=document.querySelector('#case03Website .practice-home-heading');head.style.top=reference.offsetTop+'px';
@@ -14,9 +15,10 @@ const source=document.querySelector('#case03Website .practice-home-image'),deskt
 // Keep the full third screen; align the mobile document with CASE06.
 section.style.removeProperty('min-height');section.style.removeProperty('height');
 if(!desktop){figure.style.top=(reference.offsetTop+head.offsetHeight+36)+'px';figure.style.bottom='auto';figure.style.height=(image.naturalWidth?figure.clientWidth*image.naturalHeight/image.naturalWidth:0)+'px'}else{figure.style.removeProperty('height')}
+if(desktop){const padding=head.offsetTop;figure.style.bottom=(padding+37.6)+'px';caption.style.top=(section.clientHeight-padding-17.6)+'px'}
 const r=image.getBoundingClientRect(),s=section.getBoundingClientRect();const center=r.height?r.top+r.height/2-s.top:figure.offsetTop+figure.clientHeight/2;for(const button of [previous,next])button.style.top=center+'px';
 }
-function render(){image.src=current===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(current).padStart(2,'0')+'.png';image.alt='产品推演 PDF 第 '+current+' 页';previous.setAttribute('aria-label','上一页：PDF 第 '+(current===6?14:current-1)+' 页');next.setAttribute('aria-label','下一页：PDF 第 '+(current===14?6:current+1)+' 页');if(dialog.open&&matchMedia('(max-width:700px)').matches){sourceImage.src=image.src;sourceImage.alt=image.alt;document.querySelector('#sourceTitle').textContent='产品推演';document.querySelector('#sourceScroll').scrollTo(0,0)}fit()}
+function render(){caption.firstElementChild.textContent=String(current-5).padStart(2,'0')+' / 09';image.src=current===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(current).padStart(2,'0')+'.png';image.alt='产品推演 PDF 第 '+current+' 页';previous.setAttribute('aria-label','上一页：PDF 第 '+(current===6?14:current-1)+' 页');next.setAttribute('aria-label','下一页：PDF 第 '+(current===14?6:current+1)+' 页');if(dialog.open&&matchMedia('(max-width:700px)').matches){sourceImage.src=image.src;sourceImage.alt=image.alt;document.querySelector('#sourceTitle').textContent='产品推演';document.querySelector('#sourceScroll').scrollTo(0,0)}fit()}
 let turnRevision=0,desktopTarget=null;
 function select(page){
  if(matchMedia('(min-width:701px)').matches){
