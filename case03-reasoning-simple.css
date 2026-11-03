@@ -8,3 +8,5 @@
 .reasoning-simple-figure{overflow:hidden}
 
 .reasoning-desktop-caption{display:none}@media(min-width:701px){.reasoning-simple-figure{left:8.81249%;right:8.81249%;align-items:flex-start}.reasoning-desktop-caption{display:flex;position:absolute;left:0;right:0;justify-content:center;margin:0;color:#ffffffb3;font:11px/1.6 "Case Navigation Latin",serif;font-variant-numeric:oldstyle-nums proportional-nums}}
+
+@media(min-width:701px){.reasoning-desktop-caption>span{transform:translateX(1px)}}
