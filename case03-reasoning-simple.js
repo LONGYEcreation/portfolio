@@ -17,8 +17,14 @@ if(!desktop){figure.style.top=(reference.offsetTop+head.offsetHeight+36)+'px';fi
 const r=image.getBoundingClientRect(),s=section.getBoundingClientRect();const center=r.height?r.top+r.height/2-s.top:figure.offsetTop+figure.clientHeight/2;for(const button of [previous,next])button.style.top=center+'px';
 }
 function render(){image.src=current===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(current).padStart(2,'0')+'.png';image.alt='产品推演 PDF 第 '+current+' 页';previous.setAttribute('aria-label','上一页：PDF 第 '+(current===6?14:current-1)+' 页');next.setAttribute('aria-label','下一页：PDF 第 '+(current===14?6:current+1)+' 页');if(dialog.open&&matchMedia('(max-width:700px)').matches){sourceImage.src=image.src;sourceImage.alt=image.alt;document.querySelector('#sourceTitle').textContent='产品推演';document.querySelector('#sourceScroll').scrollTo(0,0)}fit()}
-let turnRevision=0;
+let turnRevision=0,desktopTarget=null;
 function select(page){
+ if(matchMedia('(min-width:701px)').matches){
+  const target=page<6?14:page>14?6:page,revision=++turnRevision;desktopTarget=target;
+  const ready=new Image();ready.src=target===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(target).padStart(2,'0')+'.png';
+  ready.decode().then(()=>{if(revision!==turnRevision)return;current=target;desktopTarget=null;image.loading='eager';render()}).catch(()=>{if(revision===turnRevision)desktopTarget=null});return;
+ }
+
  const nextPage=page<6?14:page>14?6:page;if(nextPage===current)return;
  const direction=page>current?1:-1,revision=++turnRevision;
  const src=nextPage===6?'assets/case03-simple-06-centered.svg':'assets/case03-simple-'+String(nextPage).padStart(2,'0')+'.png';
@@ -40,7 +46,7 @@ function select(page){
  };
  if(preload.complete)turn();else preload.onload=turn;
 }
-previous.onclick=()=>select(current-1);next.onclick=()=>select(current+1);
+previous.onclick=()=>select((desktopTarget??current)-1);next.onclick=()=>select((desktopTarget??current)+1);
 const dialog=document.querySelector('#sourceDialog'),sourceImage=document.querySelector('#sourceImage'),wrap=document.querySelector('#sourceImageWrap');
 function open(){sourceImage.src=image.src;document.querySelector('#sourceTitle').textContent=matchMedia('(max-width:700px)').matches?'产品推演':'产品推演 · '+current+' / 14';wrap.classList.add('original','full-page');dialog.showModal();document.querySelector('#sourceScroll').scrollTo(0,0)}
 let modalSwipe=null;function zoomed(){const m=sourceImage.style.transform.match(/scale\(([^)]+)\)/);return m&&parseFloat(m[1])>1.01}
